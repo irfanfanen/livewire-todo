@@ -2,14 +2,14 @@
 
 namespace App\Livewire;
 
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 use \App\Models\Todo;
 use Livewire\Attributes\Computed;
 
 class Todos extends Component
 {
-    #[Validate]
+    public $todos;
+
     public $task = '';
 
     public $category = '';
@@ -19,6 +19,11 @@ class Todos extends Component
     public $editedTask = '';
 
     public $editedTaskId = null;
+
+    public function mount()
+    {
+        $this->todos = Todo::all();
+    }
 
     public function rules()
     {
@@ -35,18 +40,15 @@ class Todos extends Component
         Todo::create($this->all());
 
         $this->reset();
-    }
-
-    #[Computed()]
-    public function lists()
-    {
-        return Todo::all();
+        $this->todos = Todo::all();
     }
 
     public function delete($id)
     {
         $todo = Todo::find($id);
         $todo->delete();
+
+        $this->todos = Todo::all();
     }
 
     public function completed($id)
@@ -55,6 +57,8 @@ class Todos extends Component
         $todo->update([
             'status' => 'completed'
         ]);
+
+        $this->todos = Todo::all();
     }
 
     public function edit($data)
@@ -71,12 +75,11 @@ class Todos extends Component
         ]);
 
         $this->editedTaskId = null;
+        $this->todos = Todo::all();
     }
 
     public function render()
     {
-        return view('livewire.todos', [
-            'todos' => $this->lists()
-        ]);
+        return view('livewire.todos');
     }
 }

@@ -32,7 +32,7 @@
         </form>
 
         <div class="mb-3">
-            @if ($todos == null)
+            @if ($todos->isEmpty() || $todos->every(fn($todo) => $todo->status === 'completed'))
                 <p class="text-center">Belum ada agenda, silahkan tambah terlebih dahulu..</p>                
             @else
                 @foreach ($todos as $todo)
