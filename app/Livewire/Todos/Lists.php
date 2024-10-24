@@ -1,30 +1,21 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Todos;
 
+use App\Models\Todo;
+use Livewire\Attributes\On;
 use Livewire\Component;
-use \App\Models\Todo;
-use Livewire\Attributes\Title;
 
-#[Title('Todos')]
-
-class Todos extends Component
+class Lists extends Component
 {
-    public $todos;
-
-    public $task = '';
-
-    public $category = '';
-
     public $status = 'pending';
-
     public $editedTask = '';
-
     public $editedTaskId = null;
-
-    public function mount()
+    
+    #[On('todoCreated')]
+    public function updateList()
     {
-        $this->todos = Todo::all();
+
     }
 
     public function rules()
@@ -35,22 +26,12 @@ class Todos extends Component
         ];
     }
 
-    public function save()
-    {
-        $this->validate();
-
-        Todo::create($this->all());
-
-        $this->reset();
-        $this->todos = Todo::all();
-    }
-
     public function delete($id)
     {
         $todo = Todo::find($id);
         $todo->delete();
 
-        $this->todos = Todo::all();
+        $this->dispatch('todoCreated', $todo);
     }
 
     public function completed($id)
@@ -60,7 +41,7 @@ class Todos extends Component
             'status' => 'completed'
         ]);
 
-        $this->todos = Todo::all();
+        $this->dispatch('todoCreated', $todo);
     }
 
     public function edit($data)
@@ -77,11 +58,14 @@ class Todos extends Component
         ]);
 
         $this->editedTaskId = null;
-        $this->todos = Todo::all();
+        
+        $this->dispatch('todoCreated', $todo);
     }
 
     public function render()
     {
-        return view('livewire.todos');
+        return view('livewire.todos.lists', [
+            'todos' => Todo::orderBy('created_at', 'desc')->get()
+        ]);
     }
 }
