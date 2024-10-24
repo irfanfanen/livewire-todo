@@ -4,7 +4,9 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use \App\Models\Todo;
-use Livewire\Attributes\Computed;
+use Livewire\Attributes\Title;
+
+#[Title('Todos')]
 
 class Todos extends Component
 {
