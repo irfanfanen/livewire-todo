@@ -18,14 +18,6 @@ class Lists extends Component
 
     }
 
-    public function rules()
-    {
-        return [
-            'task' => 'required|min:4|max:255',
-            'category' => 'required'
-        ];
-    }
-
     public function delete($id)
     {
         $todo = Todo::find($id);

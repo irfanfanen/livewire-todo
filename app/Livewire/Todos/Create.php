@@ -13,7 +13,7 @@ class Create extends Component
     public function rules()
     {
         return [
-            'task' => 'required|min:4|max:255',
+            'task' => 'required|max:255',
             'category' => 'required'
         ];
     }
