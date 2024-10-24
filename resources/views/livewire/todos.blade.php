@@ -2,7 +2,7 @@
     <div class="col-md-5 bg-infox">
         <div class="text-center mb-4">
             <h1>My Action Plan</h1>
-            <p>Keep yourself organized and be productive</p>
+            <small>Keep yourself organized and be productive</small>
         </div>
 
         <form wire:submit="save">
@@ -33,7 +33,7 @@
 
         <div class="mb-3">
             @if ($todos->isEmpty() || $todos->every(fn($todo) => $todo->status === 'completed'))
-                <p class="text-center">Belum ada agenda, silahkan tambah terlebih dahulu..</p>                
+                <p class="text-center text-secondary">Belum ada agenda, silahkan tambah terlebih dahulu..</p>                
             @else
                 @foreach ($todos as $todo)
                     @if ($todo->status === 'pending')
