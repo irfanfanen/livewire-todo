@@ -26,6 +26,8 @@ class Create extends Component
 
         $this->reset();
 
+        session()->flash('message', 'Task created successfully.');
+
         $this->dispatch('todoCreated', $todo);
     }
 

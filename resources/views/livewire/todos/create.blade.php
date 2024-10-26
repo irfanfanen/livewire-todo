@@ -1,4 +1,7 @@
 <div>
+    {{-- Message --}}
+    <x-session-message />
+
     <form wire:submit="save">
         <div class="d-flex justify-content-between mb-3">
             <input wire:model.live="task" type="text" class="form-control me-2" name="title"
